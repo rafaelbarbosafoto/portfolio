@@ -1397,10 +1397,15 @@ body.photo-view-open .photo-navigation {
         padding: 14px;
     }
 
-    .logo {
-        width: 160px;
-        min-height: 72px;
-    }
+    .logo{
+
+    width:170px;
+
+    padding:16px;
+
+    font-size:11px;
+
+}
 
     .menu-button,
     .main-menu a,
