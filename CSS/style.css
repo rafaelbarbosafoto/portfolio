@@ -1448,6 +1448,20 @@ body.photo-view-open .photo-navigation {
         font-size: 20px;
     }
 
+    /* Hero mobile */
+
+.hero-buttons{
+
+    display:none;
+
+}
+
+.scroll-indicator{
+
+    display:none;
+
+}
+
     .hero-actions {
         margin-top: 30px;
     }
