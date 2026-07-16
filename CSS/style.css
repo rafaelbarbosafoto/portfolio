@@ -1580,15 +1580,15 @@ body.photo-view-open .photo-navigation {
 /* Navegação unitária: celular */
 
 @media (max-width: 480px) {
-    .photo-navigation {
-        flex-direction: column;
-        gap: 14px;
+    .photo-navigation{
 
-        padding:
-            0
-            14px
-            60px;
-    }
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:12px;
+
+}
 
     .photo-nav-button {
         width: 100%;
