@@ -1,0 +1,1584 @@
+/* ========================================
+   RESET BÁSICO
+======================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--dark);
+    color: var(--light);
+
+    font-family: var(--font-text);
+    font-weight: 400;
+    line-height: 1.15;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    color: inherit;
+    font: inherit;
+}
+
+/* ========================================
+   DESIGN TOKENS
+======================================== */
+
+:root {
+
+    /* Cores */
+
+    --light: #D3D1D1;
+    --dark: #1D1D1D;
+
+    /* Tipografia */
+
+    --font-logo: "Shippori Antique B1", serif;
+    --font-title: "Poppins", sans-serif;
+    --font-text: "Ponnala", sans-serif;
+
+}
+
+/* ========================================
+   TIPOGRAFIA
+======================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+    font-family:var(--font-title);
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:-0.05em;
+
+    line-height:.90;
+
+}
+
+/* ========================================
+   PERFORMANCE
+======================================== */
+
+.hero-content,
+.scroll-indicator {
+    will-change: transform, opacity;
+}
+
+
+/* ========================================
+   HEADER FIXO
+======================================== */
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    padding: 22px;
+}
+
+
+/* Logo e botão de menu usam a mesma lógica visual */
+
+.logo,
+.menu-button {
+    min-height: 90px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--light);
+    color: var(--dark);
+
+    border: 0;
+
+    font-size: 12px;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.logo {
+    width: 215px;
+    min-height: 90px;
+
+    padding: 14px 18px;
+
+    justify-content: flex-start;
+    align-items: center;
+
+    font-family: "Shippori Antique B1", sans-serif;
+    font-size: 33px;
+    font-weight: 400;
+
+    line-height: 0.88;
+    letter-spacing: -0.12em;
+
+    text-transform: uppercase;
+}
+
+.menu-button {
+    width: 86px;
+    position: relative;
+    z-index: 10;
+    font-family: var(--font-title);
+
+    font-size: 15px;
+    font-weight: 600;
+
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.logo:hover,
+.menu-button:hover {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+
+/* ========================================
+   MENU LATERAL
+======================================== */
+
+.main-menu {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    pointer-events: none;
+}
+
+.main-menu.is-open {
+    pointer-events: auto;
+}
+
+
+/* ========================================
+   BOTÕES DO MENU
+======================================== */
+
+.main-menu a,
+.menu-close {
+    width: 86px;
+    min-height: 90px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--light);
+    color: var(--dark);
+
+    border: 0;
+
+    font-family: var(--font-title);
+    font-size: 10px;
+    font-weight: 100;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+    opacity: 0;
+
+    /*
+      Estado de fechamento:
+      mais lento e suave.
+    */
+    transition-property:
+        transform,
+        opacity,
+        background-color,
+        color;
+
+    transition-duration:
+        700ms,
+        100ms,
+        180ms,
+        180ms;
+
+    transition-timing-function:
+        cubic-bezier(0.22, 1, 0.36, 1),
+        linear,
+        ease,
+        ease;
+
+     /*
+      O movimento acontece primeiro.
+      O fade só começa quando o botão já está quase recolhido.
+    */
+    transition-delay:
+    var(--close-delay),
+    calc(var(--close-delay) + 580ms),
+    0ms,
+    0ms;
+}
+
+
+/* ========================================
+   POSIÇÕES FECHADAS
+======================================== */
+
+.main-menu a:nth-child(1) {
+    transform: translateY(0);
+
+    --open-delay: 0ms;
+    --close-delay: 270ms;
+}
+
+.main-menu a:nth-child(2) {
+    transform: translateY(-100px);
+
+    --open-delay: 80ms;
+    --close-delay: 180ms;
+}
+
+.main-menu a:nth-child(3) {
+    transform: translateY(-200px);
+
+    --open-delay: 160ms;
+    --close-delay: 90ms;
+}
+
+.main-menu .menu-close {
+    transform: translateY(-300px);
+
+    --open-delay: 240ms;
+    --close-delay: 0ms;
+}
+
+
+/* ========================================
+   ESTADO ABERTO
+======================================== */
+
+.main-menu.is-open a,
+.main-menu.is-open .menu-close {
+    transform: translateY(0);
+    opacity: 1;
+
+    /*
+      Abertura mais rápida.
+    */
+    transition-duration:
+        420ms,
+        100ms,
+        180ms,
+        180ms;
+
+    transition-delay:
+        var(--open-delay),
+        var(--open-delay),
+        0ms,
+        0ms;
+}
+
+
+/* ========================================
+   HOVER
+======================================== */
+
+.main-menu a:hover,
+.menu-close:hover {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.menu-close {
+    font-size: 34px;
+    line-height: 1;
+}
+
+
+/* Esconde o botão MENU enquanto o menu está aberto */
+
+body.menu-open .menu-button {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Faz os botões passarem por baixo uns dos outros */
+
+.main-menu a:nth-child(1) {
+    z-index: 4;
+}
+
+.main-menu a:nth-child(2) {
+    z-index: 3;
+}
+
+.main-menu a:nth-child(3) {
+    z-index: 2;
+}
+
+.main-menu .menu-close {
+    z-index: 1;
+}
+
+/* ========================================
+   HERO
+======================================== */
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: flex-end;
+
+    overflow: hidden;
+
+    background-image: url("../ASSETS/IMAGENS/HOME/hero-home.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/* Degradê por cima da fotografia */
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.72) 0%,
+        rgba(0, 0, 0, 0.30) 48%,
+        rgba(0, 0, 0, 0.15) 100%
+    );
+}
+
+
+/* Conteúdo fica acima do degradê */
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+
+    width: min(520px, calc(100% - 44px));
+
+    margin-left: clamp(22px, 4.5vw, 70px);
+    margin-bottom: clamp(35px, 6vh, 70px);
+}
+
+.hero-content h1 {
+    max-width: 860px;
+
+    font-size: clamp(28px, 2.8vw, 46px);
+
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.hero-signature {
+    margin-top: 14px;
+
+    font-family: var(--font-text);
+    font-size: clamp(14px, 1.2vw, 18px);
+    font-weight: 400;
+
+    line-height: 1.3;
+}
+
+/* Indicador discreto de rolagem */
+
+.scroll-indicator {
+    position: absolute;
+    right: clamp(22px, 4vw, 64px);
+    bottom: clamp(30px, 5vh, 60px);
+
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--light);
+
+    font-size: 42px;
+    line-height: 1;
+
+    animation:breatheArrow 2.8s ease-in-out infinite;
+
+    transition:
+        opacity 250ms ease,
+        transform 250ms ease;
+}
+
+.scroll-indicator:hover{
+
+    animation-play-state:paused;
+transform:translateY(8px);
+
+}
+
+/* ========================================
+   MICROINTERAÇÕES
+======================================== */
+
+@keyframes breatheArrow {
+
+    0%,
+    100%{
+        transform: translateY(0);
+        opacity:.9;
+    }
+
+    50%{
+        transform: translateY(8px);
+        opacity:1;
+    }
+
+}
+
+/* ========================================
+   BOTÕES DO HERO
+======================================== */
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+
+    margin-top: 46px;
+}
+
+.primary-button {
+    width: 220px;
+    min-height: 92px;
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--light);
+    color: var(--dark);
+
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 600;
+    
+    letter-spacing: .14em;
+    text-transform: uppercase;
+
+    transition:
+        background-color .25s ease,
+        color .25s ease,
+        transform .35s cubic-bezier(.22,1,.36,1),
+        box-shadow .35s cubic-bezier(.22,1,.36,1);
+}
+
+.primary-button:hover {
+    background-color: var(--dark);
+    color: var(--light);
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ========================================
+   GALERIA DE TRABALHOS
+======================================== */
+
+.works-gallery {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 28px;
+
+    width: 100%;
+
+    padding:
+        clamp(60px, 7vw, 100px)
+        clamp(22px, 4vw, 64px);
+    padding-top: 48px;
+
+
+    background-color: var(--dark);
+}
+
+.gallery-column {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 28px;
+}
+
+
+/* Card */
+
+.work-card {
+    display: block;
+
+    min-width: 0;
+
+    color: var(--light);
+}
+
+
+/* Imagem */
+
+.work-image-wrapper {
+    position: relative;
+
+    overflow: hidden;
+
+    background-color: #151515;
+}
+
+.work-image-wrapper img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    transition:
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 400ms ease;
+}
+
+
+/* Zoom sutil para todos os trabalhos */
+
+.work-card:hover .work-image-wrapper img {
+    transform: scale(1.015);
+}
+
+
+/* ========================================
+   FOTOS UNITÁRIAS
+======================================== */
+
+.work-card--single .work-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    padding: clamp(20px, 3vw, 42px);
+
+    background:
+        linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.08) 65%
+        );
+
+    opacity: 0;
+
+    transition:
+        opacity 350ms ease;
+}
+
+.work-card--single:hover .work-overlay {
+    opacity: 1;
+}
+
+.work-overlay h2 {
+    max-width: 620px;
+
+    font-size: clamp(25px, 3vw, 48px);
+    line-height: 0.96;
+}
+
+.work-overlay span {
+    margin-top: 10px;
+
+    font-family: var(--font-title);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+/* ========================================
+   CAPAS DE SÉRIE
+======================================== */
+
+.work-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 30px;
+
+    min-height: 135px;
+
+    padding: 22px 24px;
+
+    background-color: var(--light);
+    color: var(--dark);
+
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+
+    transition:
+        background-color 250ms ease,
+        color 250ms ease,
+        outline-color 250ms ease;
+}
+
+.work-card--series:hover .work-caption {
+    background-color: var(--dark);
+    color: var(--light);
+
+    outline: 1px solid var(--light);
+    outline-color: var(--light);
+    outline-offset: -1px;
+}
+
+.work-type {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.work-caption h2 {
+    max-width: 520px;
+
+    font-size: clamp(24px, 2.5vw, 42px);
+    line-height: 0.95;
+}
+
+.work-year {
+    flex-shrink: 0;
+
+    font-family: var(--font-title);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+
+/* ========================================
+   RODAPÉ 
+======================================== */
+
+.site-footer{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+
+    padding:
+        70px
+        clamp(22px,5vw,80px);
+
+    background:var(--light);
+
+    color:var(--dark);
+
+}
+
+/* lado esquerdo */
+
+.footer-left{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.footer-label{
+
+    margin-bottom:10px;
+
+    font-family:var(--font-title);
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.08em;
+
+}
+
+/* links rodapé */
+
+.social-link{
+
+    display:flex;
+    align-items:center;
+
+    gap:16px;
+
+    width:fit-content;
+
+    color:var(--dark);
+
+    font-family:var(--font-title);
+
+    font-size:15px;
+
+    transition:
+        transform .25s ease;
+
+}
+
+.social-icon{
+
+    width:62px;
+    height:62px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid transparent;
+
+    color:var(--dark);
+
+    transition:
+        background-color .25s ease,
+        border-color .25s ease,
+        color .25s ease;
+
+}
+
+.social-icon svg{
+
+    width:30px;
+    height:30px;
+
+    display:block;
+
+}
+
+.social-link:hover{
+
+    transform:translateX(4px);
+
+}
+
+.social-link:hover .social-icon{
+
+    background:var(--dark);
+
+    border-color:var(--dark);
+
+    color:var(--light);
+
+}
+
+.social-link:hover svg{
+
+    fill:var(--light);
+
+}
+
+/* lado direito */
+
+.footer-right{
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:18px;
+
+}
+
+.footer-photo{
+
+    width:180px;
+    aspect-ratio:1;
+
+    overflow:hidden;
+
+}
+
+.footer-photo img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform .45s cubic-bezier(.22,1,.36,1);
+
+}
+
+.footer-photo:hover img{
+
+    transform:scale(1.04);
+
+}
+
+.footer-about{
+
+    font-family:var(--font-title);
+
+    font-size:14px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.08em;
+
+    transition:
+        transform .25s ease,
+        letter-spacing .25s ease;
+
+}
+
+.footer-about:hover{
+
+    transform:translateX(4px);
+
+    letter-spacing:.14em;
+
+}
+
+.footer-right:hover .footer-about{
+
+    letter-spacing:.14em;
+
+}
+
+/* ========================================
+   PÁGINA DE SÉRIE
+======================================== */
+
+.series-hero {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.series-hero-content {
+    width: min(620px, calc(100% - 44px));
+}
+
+.series-label,
+.series-year {
+    display: block;
+
+    font-family: var(--font-title);
+    font-weight: 400;
+}
+
+.series-label {
+    margin-bottom: 10px;
+
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.series-hero-content h1 {
+    max-width: 760px;
+
+    font-size: clamp(58px, 7vw, 112px);
+    line-height: 0.86;
+    letter-spacing: -0.055em;
+}
+
+.series-year {
+    margin-top: 14px;
+
+    font-size: 16px;
+}
+
+
+/* Galeria da série */
+
+.series-gallery {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 28px;
+
+    width: 100%;
+
+    padding:
+        clamp(60px, 7vw, 100px)
+        clamp(22px, 4vw, 64px);
+
+    background-color: var(--dark);
+}
+
+.series-photo {
+    display: block;
+
+    overflow: hidden;
+
+    background-color: #151515;
+}
+
+.series-photo img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    transition:
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 400ms ease;
+}
+
+.series-photo:hover img {
+    transform: scale(1.015);
+}
+
+/* ========================================
+   PÁGINA DE FOTOGRAFIA UNITÁRIA
+======================================== */
+
+.single-work {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.single-photo-section {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        120px
+        clamp(22px, 5vw, 80px)
+        24px;
+}
+
+
+/* Foto na página */
+
+.photo-zoom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    max-width: min(1100px, 88vw);
+
+    background: transparent;
+    border: 0;
+
+    cursor: zoom-in;
+}
+
+.photo-zoom img {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 100%;
+    max-height: 58vh;
+
+    object-fit: contain;
+
+    transition:
+        transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 350ms ease;
+}
+
+
+/* ========================================
+   VISUALIZAÇÃO EM TELA CHEIA
+======================================== */
+
+body.photo-view-open {
+    overflow: hidden;
+}
+
+/* A foto original continua no lugar */
+
+.photo-zoom {
+    transition:
+        transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 250ms ease;
+}
+
+.photo-zoom:hover {
+    transform: scale(1.01);
+}
+
+
+/* Camada criada pelo JavaScript */
+
+.photo-lightbox {
+    position: fixed;
+    inset: 0;
+
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background-color: rgba(0, 0, 0, 0);
+
+    cursor: zoom-out;
+    opacity: 0;
+
+    transition:
+        background-color 550ms ease,
+        opacity 550ms ease;
+}
+
+.photo-lightbox img {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 96vw;
+    max-height: 94vh;
+
+    object-fit: contain;
+
+    opacity: 0;
+    transform: scale(0.96);
+
+    transition:
+        opacity 600ms ease,
+        transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* Entrada */
+
+.photo-lightbox.is-visible {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.98);
+}
+
+.photo-lightbox.is-visible img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+/* Saída */
+
+.photo-lightbox.is-closing {
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.photo-lightbox.is-closing img {
+    opacity: 1;
+    transform: scale(0.96);
+}
+
+
+/* Interface some e reaparece suavemente */
+
+.site-header,
+.site-footer,
+.single-photo-info,
+.photo-navigation {
+    transition:
+        opacity 500ms ease,
+        visibility 500ms ease;
+}
+
+body.photo-view-open .site-header,
+body.photo-view-open .site-footer,
+body.photo-view-open .single-photo-info,
+body.photo-view-open .photo-navigation {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+/* ========================================
+   LEGENDA
+======================================== */
+
+.single-photo-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 6px;
+
+    padding:
+        12px
+        22px
+        24px;
+
+    text-align: center;
+}
+
+.single-photo-info h1 {
+    max-width: 560px;
+
+    font-size: clamp(18px, 2vw, 28px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+}
+
+.single-photo-info p {
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 400;
+
+    letter-spacing: 0.08em;
+}
+
+/* ========================================
+   NAVEGAÇÃO DAS FOTOGRAFIAS
+======================================== */
+
+.photo-navigation {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 24px;
+
+    padding:
+        0
+        clamp(22px, 5vw, 80px)
+        28px;
+}
+
+.photo-nav-button {
+    width: auto;
+    min-width: 220px;
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 28px;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    color: var(--light);
+    background: transparent;
+
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    transition:
+        background-color 250ms ease,
+        color 250ms ease,
+        border-color 250ms ease,
+        transform 250ms ease;
+}
+
+.photo-nav-button:hover {
+    background-color: var(--light);
+    color: var(--dark);
+    border-color: var(--light);
+
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   PÁGINA SOBRE
+======================================== */
+
+.about-page {
+    min-height: 100vh;
+
+    background-color: var(--light);
+    color: var(--dark);
+}
+
+.about-main {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    padding:
+        155px
+        clamp(22px, 5vw, 80px)
+        50px;
+}
+
+
+/* Conteúdo principal */
+
+.about-content {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.15fr)
+        minmax(280px, 0.85fr);
+
+    align-items: start;
+
+    gap: clamp(60px, 9vw, 150px);
+}
+
+.about-text {
+    max-width: 750px;
+}
+
+.about-label {
+    margin-bottom: 24px;
+
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.about-text h1 {
+    margin-bottom: 42px;
+
+    font-size: clamp(48px, 7vw, 105px);
+    line-height: 0.86;
+}
+
+.about-biography {
+    max-width: 680px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+
+    font-family: var(--font-title);
+    font-size: clamp(17px, 1.5vw, 22px);
+    font-weight: 400;
+
+    line-height: 1.45;
+}
+
+
+/* Foto quadrada */
+
+.about-photo {
+    width: 100%;
+    max-width: 520px;
+
+    justify-self: end;
+
+    aspect-ratio: 1;
+
+    overflow: hidden;
+}
+
+.about-photo img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-photo:hover img {
+    transform: scale(1.025);
+}
+
+
+/* Contato integrado à página */
+
+.about-contact {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    gap: 50px;
+
+    margin-top: auto;
+    padding-top: 90px;
+}
+
+.about-contact-links {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+/* ========================================
+   HEADER CLARO — PÁGINA SOBRE
+======================================== */
+
+.about-page .logo,
+.about-page .menu-button,
+.about-page .main-menu a,
+.about-page .menu-close {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+
+/* Hover invertido */
+
+.about-page .logo:hover,
+.about-page .menu-button:hover,
+.about-page .main-menu a:hover,
+.about-page .menu-close:hover {
+    background-color: var(--light);
+    color: var(--dark);
+
+    outline: 1px solid var(--dark);
+    outline-offset: -1px;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 700px) {
+
+    .site-header {
+        padding: 14px;
+    }
+
+    .logo {
+        width: 160px;
+        min-height: 72px;
+    }
+
+    .menu-button,
+    .main-menu a,
+    .menu-close {
+        width: 72px;
+        min-height: 72px;
+    }
+
+    .main-menu {
+        top: 14px;
+        right: 14px;
+    }
+
+    .hero {
+        background-position: 58% center;
+    }
+
+    .hero-overlay {
+        background:
+            linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.82) 0%,
+                rgba(0, 0, 0, 0.20) 80%
+            );
+    }
+
+    .hero-content {
+        width: calc(100% - 28px);
+
+        margin-left: 14px;
+        margin-bottom: 26px;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(60px, 19vw, 90px);
+    }
+
+    .hero-content p {
+        max-width: 330px;
+
+        font-size: 20px;
+    }
+
+    .hero-actions {
+        margin-top: 30px;
+    }
+
+    .primary-button {
+        flex: 1;
+    }
+
+    .site-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 50px;
+    }
+
+    
+.works-gallery {
+    flex-direction: column;
+
+    gap: 22px;
+
+    padding:
+        90px
+        14px;
+}
+
+.gallery-column {
+    width: 100%;
+
+    gap: 22px;
+}
+
+.work-caption {
+    min-height: 110px;
+
+    padding: 18px;
+}
+
+.work-card--single .work-overlay {
+    /*
+      Em telas touch não existe hover confiável.
+      Então deixamos a informação levemente visível.
+    */
+    opacity: 1;
+
+    background:
+        linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.68) 0%,
+            rgba(0, 0, 0, 0) 58%
+        );
+}
+
+.work-overlay h2 {
+    font-size: 27px;
+}
+
+.series-hero-content {
+    width: calc(100% - 28px);
+}
+
+.series-hero-content h1 {
+    font-size: clamp(58px, 18vw, 92px);
+}
+
+.series-gallery {
+    flex-direction: column;
+
+    gap: 22px;
+
+    padding:
+        60px
+        14px;
+}
+
+.site-footer{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:70px;
+
+}
+
+.about-main {
+    padding:
+        120px
+        14px
+        40px;
+}
+
+.about-content {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+}
+
+.about-text h1 {
+    font-size: clamp(48px, 15vw, 76px);
+}
+
+.about-biography {
+    font-size: 17px;
+}
+
+.about-photo {
+    max-width: none;
+
+    justify-self: stretch;
+}
+
+.about-contact {
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin-top: 70px;
+    padding-top: 0;
+}}
+
+/* Navegação unitária: celular */
+
+@media (max-width: 480px) {
+    .photo-navigation {
+        flex-direction: column;
+        gap: 14px;
+
+        padding:
+            0
+            14px
+            60px;
+    }
+
+    .photo-nav-button {
+        width: 100%;
+        min-height: 60px;
+    }
+}
+
