@@ -1434,12 +1434,16 @@ body.photo-view-open .photo-navigation {
         margin-bottom: 26px;
     }
 
-    .hero-content h1 {
-        font-size: clamp(60px, 19vw, 90px);
-    }
+    .hero-content h1{
+
+    font-size:clamp(42px,11vw,56px);
+
+    line-height:.92;
+
+}
 
     .hero-content p {
-        max-width: 330px;
+        max-width: 280px;
 
         font-size: 20px;
     }
